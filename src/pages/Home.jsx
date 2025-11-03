@@ -9,6 +9,7 @@ import sebastianImg from "../assets/sebastian-perfil.webp";
 import joseImg from "../assets/jose.png";
 import estivenImg from "../assets/est-avatar.png";
 import favicon from "../assets/favicon.png";
+import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 
 export default function Home() {
   usePageMetadata("Equipo Innovador - Inicio", favicon);
@@ -115,6 +116,9 @@ export default function Home() {
     },
   ];
 
+  // Reutilizar animación para las tarjetas del equipo
+  useRevealOnScroll('#equipo .card', { threshold: 0.2, rootMargin: '0px 0px -10% 0px', stagger: 100 });
+
   return (
     <div className="home trama">
       {/* Hero Section */}
@@ -202,7 +206,7 @@ export default function Home() {
             to={`/integrantes/${integrante.nombre.toLowerCase()}`} 
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
-            <div className="card h-100">
+            <div className="card h-100 reveal">
               <img
                 src={integrante.img}
                 className="card-img-top"

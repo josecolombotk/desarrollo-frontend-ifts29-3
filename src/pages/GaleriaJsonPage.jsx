@@ -3,6 +3,7 @@ import "../css/galeria.css";
 import galeriaData from "../data/galeria.json";
 import { usePageMetadata } from "../hooks/usePageMetadata";
 import favicon from "../assets/favicon.png";
+import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 
 export default function GaleriaJsonPage() {
   usePageMetadata("Equipo Innovador - deas de Proyectos - Galería", favicon);
@@ -21,10 +22,9 @@ export default function GaleriaJsonPage() {
     }, 500);
   }, []);
 
-  // Obtener categorías únicas
-  const categorias = ["todos", ...new Set(datos.map((item) => item.categoria))];
-
-  // Filtrar datos
+  // Animación de aparición para las tarjetas de la galería
+  // Re-inicializa cuando cambien los resultados (después del fetch o filtros/búsqueda)
+  // Usa la longitud de datos filtrados para que observe los elementos visibles actuales
   const datosFiltrados = datos.filter((item) => {
     const cumpleFiltro = filtro === "todos" || item.categoria === filtro;
     const cumpleBusqueda =
@@ -32,6 +32,11 @@ export default function GaleriaJsonPage() {
       item.descripcion.toLowerCase().includes(busqueda.toLowerCase());
     return cumpleFiltro && cumpleBusqueda;
   });
+
+  // Obtener categorías únicas
+  const categorias = ["todos", ...new Set(datos.map((item) => item.categoria))];
+
+  useRevealOnScroll('.proyecto-card', { threshold: 0.2, rootMargin: '0px 0px -10% 0px', stagger: 80 }, [datosFiltrados.length, loading]);
 
   if (loading) {
     return (
@@ -127,7 +132,7 @@ export default function GaleriaJsonPage() {
             <div className="row g-4">
               {datosFiltrados.map((item) => (
                 <div key={item.id} className="col-lg-4 col-md-6">
-                  <div className="proyecto-card">
+                  <div className="proyecto-card reveal">
                     <div className="card-image-container">
                       <img
                         src={item.imagen}
