@@ -166,7 +166,7 @@ export default function Home() {
         {/* Contenido del Hero */}
         <div className="container hero-content">
           <div className="row align-items-center min-vh-100 pt-5">
-            <div className="col-lg-6">
+            <div className="col-lg-6" style={{ marginLeft: '40px' }}>
               <h1 className="display-4 fw-bold mb-4">Equipo Innovador</h1>
               <p className="lead mb-4">
                 Somos un grupo de estudiantes apasionados por la tecnología y el

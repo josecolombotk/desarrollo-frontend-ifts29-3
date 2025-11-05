@@ -136,7 +136,7 @@ const Sidebar = () => {
                 className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
                 onClick={closeSidebar}
               >
-                Diagrama
+                Diagramas
               </NavLink>
             </li>
 

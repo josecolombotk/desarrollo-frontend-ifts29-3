@@ -149,3 +149,7 @@
 .jose-page-container .favorites-list li {
   background-color: white !important;
 }
+
+.col-lg-6 {
+  margin-left: 0;
+}

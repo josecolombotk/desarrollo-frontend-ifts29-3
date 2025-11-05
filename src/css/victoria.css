@@ -255,3 +255,7 @@ body {
 .victoria-page-container .bg-primary .btn-outline-light:hover i {
     color: #B5759F !important;
 }
+
+.col-lg-6 {
+  margin-left: 0;
+}
