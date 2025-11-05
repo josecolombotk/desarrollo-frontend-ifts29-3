@@ -169,3 +169,7 @@
   font-family: "Cormorant Garamond", serif;
   color: var(--text-color);
 }
+
+.col-lg-6 {
+  margin-left: 0;
+}
