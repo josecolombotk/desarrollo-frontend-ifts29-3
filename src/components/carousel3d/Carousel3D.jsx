@@ -44,15 +44,15 @@ const Carousel3D = ({ items, autoRotate = false, interval = 5000 }) => {
   }, [autoRotate, interval]);
 
   return (
-    <div className="carousel-3d-container ${isMobile ? 'mobile-view' : ''}">
+    <div className={`music-carousel-3d-container ${isMobile ? 'mobile-view' : ''}`}>
       <div 
-        className="carousel-3d" 
+        className="music-carousel-3d" 
         style={!isMobile ? { transform: `rotateY(${currentSlide * -90}deg)` } : {}}
       >
         {items.map((item, index) => (
           <div 
             key={index}
-            className={`carousel-3d-item ${index === currentSlide ? 'active' : ''}`}
+            className={`music-carousel-3d-item ${index === currentSlide ? 'active' : ''}`}
             data-index={index}
           >
             <div className="music-card">

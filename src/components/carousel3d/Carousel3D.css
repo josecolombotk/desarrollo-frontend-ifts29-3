@@ -219,7 +219,7 @@
 }
 
 /* Estilos para el carrusel 3D */
-.carousel-3d-container {
+.music-carousel-3d-container {
     position: relative;
     width: 100%;
     height: 500px;
@@ -230,7 +230,7 @@
     margin: 50px 0;
 }
 
-.carousel-3d {
+.music-carousel-3d {
     position: relative;
     width: 300px;
     height: 400px;
@@ -238,7 +238,7 @@
     transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-.carousel-3d-item {
+.music-carousel-3d-item {
     position: absolute;
     width: 300px;
     height: 400px;
@@ -249,24 +249,24 @@
     opacity: 0.7;
 }
 
-.carousel-3d-item.active {
+.music-carousel-3d-item.active {
     opacity: 1;
     z-index: 10;
 }
 
-.carousel-3d-item:nth-child(1) {
+.music-carousel-3d-item:nth-child(1) {
     transform: rotateY(0deg) translateZ(250px);
 }
 
-.carousel-3d-item:nth-child(2) {
+.music-carousel-3d-item:nth-child(2) {
     transform: rotateY(90deg) translateZ(250px);
 }
 
-.carousel-3d-item:nth-child(3) {
+.music-carousel-3d-item:nth-child(3) {
     transform: rotateY(180deg) translateZ(250px);
 }
 
-.carousel-3d-item:nth-child(4) {
+.music-carousel-3d-item:nth-child(4) {
     transform: rotateY(270deg) translateZ(250px);
 }
 
@@ -407,7 +407,7 @@
     }
 }
 
-.carousel-3d-item.active .music-card {
+.music-carousel-3d-item.active .music-card {
     animation: float 3s ease-in-out infinite;
 }
 
@@ -437,25 +437,25 @@
         font-size: 1rem;
     }
     
-    .carousel-3d-container {
+    .music-carousel-3d-container {
         height: 400px;
         perspective: 800px;
     }
     
-    .carousel-3d {
+    .music-carousel-3d {
         width: 250px;
         height: 320px;
     }
     
-    .carousel-3d-item {
+    .music-carousel-3d-item {
         width: 250px;
         height: 320px;
     }
     
-    .carousel-3d-item:nth-child(1),
-    .carousel-3d-item:nth-child(2),
-    .carousel-3d-item:nth-child(3),
-    .carousel-3d-item:nth-child(4) {
+    .music-carousel-3d-item:nth-child(1),
+    .music-carousel-3d-item:nth-child(2),
+    .music-carousel-3d-item:nth-child(3),
+    .music-carousel-3d-item:nth-child(4) {
         transform: rotateY(calc(var(--rotation, 0) * 90deg)) translateZ(200px);
     }
     
