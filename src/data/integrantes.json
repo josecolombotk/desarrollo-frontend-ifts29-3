@@ -4,31 +4,46 @@
       "id": "estiven",
       "nombre": "Estiven",
       "rol": "Desarrollador Full Stack",
-      "email": "estiven.dev@gmail.com"
+      "email": "estiven.dev@gmail.com",
+      "github": "https://www.github.com",
+      "linkedin": "https://www.linkedin.com",
+      "instagram": "https://www.instagram.com"
     },
     {
       "id": "jose",
       "nombre": "Jose",
       "rol": "Desarrollador & Game Developer",
-      "email": "jose.dev@gmail.com"
+      "email": "jose.dev@gmail.com",
+      "github": "https://www.github.com",
+      "linkedin": "https://www.linkedin.com",
+      "instagram": "https://www.instagram.com"
     },
     {
       "id": "lucas",
       "nombre": "Lucas",
       "rol": "Desarrollador Frontend",
-      "email": "lucas.dev@gmail.com"
+      "email": "lucas.dev@gmail.com",
+      "github": "https://www.github.com",
+      "linkedin": "https://www.linkedin.com",
+      "instagram": "https://www.instagram.com"
     },
     {
       "id": "sebastián",
       "nombre": "Sebastián",
       "rol": "Administrador de Redes",
-      "email": "sebastian.dev@gmail.com"
+      "email": "sebastian.dev@gmail.com",
+      "github": "https://www.github.com",
+      "linkedin": "https://www.linkedin.com",
+      "instagram": "https://www.instagram.com"
     },
     {
       "id": "victoria",
       "nombre": "Victoria",
       "rol": "Diseñadora UX/UI",
-      "email": "victoria.dev@gmail.com"
+      "email": "victoria.dev@gmail.com",
+      "github": "https://www.github.com",
+      "linkedin": "https://www.linkedin.com",
+      "instagram": "https://www.instagram.com"
     }
   ]
 }

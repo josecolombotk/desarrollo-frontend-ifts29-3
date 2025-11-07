@@ -1,9 +1,9 @@
-// TeamCarousel3D.jsx - CON ANIMACIÓN DE PORCENTAJES
+// TeamCarousel3D.jsx - CON PAUSA AL HACER HOVER
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TeamCarousel3D.css';
 import '../../css/apipage.css';
-import AnimatedSkillBar from '../AnimatedSkillBar/AnimatedSkillBar'; // Importar el componente animado
+import AnimatedSkillBar from '../AnimatedSkillBar/AnimatedSkillBar';
 
 const TeamCarousel3D = ({ 
   integrantes, 
@@ -13,7 +13,16 @@ const TeamCarousel3D = ({
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [isPaused, setIsPaused] = useState(false); // Estado para pausar
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Esto es para depurar. Revisa tu consola (F12) 
+    // para ver qué datos está recibiendo este componente.
+    if (integrantes && integrantes.length > 0) {
+      console.log("Datos de integrantes recibidos:", integrantes);
+    }
+  }, [integrantes]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -39,182 +48,288 @@ const TeamCarousel3D = ({
     setCurrentSlide(index);
   };
 
+  // Timer de rotación automática que se pausa cuando isPaused es true
   useEffect(() => {
-    if (!autoRotate) return;
+    if (!autoRotate || isPaused) return;
     
     const timer = setInterval(() => {
       rotate(1);
     }, interval);
 
     return () => clearInterval(timer);
-  }, [autoRotate, interval, integrantes.length]);
+  }, [autoRotate, interval, integrantes.length, isPaused]);
 
   const handleCardClick = (integranteNombre) => {
     navigate(`/integrantes/${integranteNombre.toLowerCase()}`);
   };
 
-  const handleSocialClick = (e, url) => {
+  // Esta función solo detiene la propagación,
+  // para que al hacer clic en el link no se active el clic de la tarjeta.
+  const handleSocialClick = (e) => {
     e.stopPropagation();
-    if (url && url !== "#") {
-      window.open(url, '_blank');
-    }
   };
 
-   return (
+  // Manejadores para pausar/reanudar
+  const handleMouseEnter = () => {
+    setIsPaused(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsPaused(false);
+  };
+
+  return (
     <div className="team-carousel-wrapper">
-    <div className="team-carousel-3d-container">
       <div 
-        className="team-carousel-3d" 
-        style={!isMobile ? { transform: `rotateY(${currentSlide * -72}deg)` } : {}}
+        className="team-carousel-3d-container"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
-        {integrantes.map((integrante, index) => (
-          <div 
-            key={index}
-            className={`team-carousel-3d-item ${index === currentSlide ? 'active' : ''}`}
-            style={!isMobile ? { '--rotation': index } : {}}
-          >
+        <div 
+          className="team-carousel-3d" 
+          style={!isMobile ? { transform: `rotateY(${currentSlide * -72}deg)` } : {}}
+        >
+          {integrantes.map((integrante, index) => (
             <div 
-              className="card team-card h-100 weather-card"
-              onMouseEnter={() => setHoveredCard(index)}
-              onMouseLeave={() => setHoveredCard(null)}
-              onClick={() => handleCardClick(integrante.nombre)}
-              style={{ 
-                background: 'white',
-                color: '#1F2937',
-                overflow: 'hidden',
-                cursor: 'pointer',
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column'
-              }}
+              key={index}
+              className={`team-carousel-3d-item ${index === currentSlide ? 'active' : ''}`}
+              style={!isMobile ? { '--rotation': index } : {}}
             >
-              {/* Contenedor de imagen - SEGURO */}
               <div 
-                className="image-container" 
+                className="card team-card h-100" 
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
+                onClick={() => handleCardClick(integrante.nombre)}
+                // Estilos de tu versión (tarjeta oscura, padding, etc.)
                 style={{ 
-                  padding: '0.5rem 1rem 0',
+                  background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(30, 30, 30, 0.8))',
+                  color: '#FFFFFF',
                   overflow: 'hidden',
-                  flexShrink: 0,
-                   display: 'flex',           // Para centrado
-                    justifyContent: 'center',  // Centrado horizontal
-                    alignItems: 'center',      // Centrado vertical
-                    height: 'auto'           // Altura fija
+                  cursor: 'pointer',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: '1.2rem 1rem',
+                  gap: '0.8rem',
+                  alignItems: 'center' // <--- CORRECCIÓN PARA CENTRAR TODO
                 }}
               >
-                <img
-                  src={integrante.img}
-                 
-                  alt={integrante.nombre}
+                {/* Contenedor de imagen (centrado) */}
+                <div 
+                  className="image-container" 
                   style={{ 
-                    borderRadius: '50%',     // Circular
-                    width: '100px',          // Tamaño fijo
-                    height: '100px',         // Mismo que width para circular perfecto
-                    objectFit: 'cover'
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: '0.5rem',
+                    width: '100%' // Asegura el centrado
                   }}
-                />
-              </div>
-              
-              {/* Contenido */}
-              <div 
-                className="card-body text-center"
-                
-              >
-                <div>
-                  <h5 className="dev-name" style={{ fontSize: '0.8rem', marginBottom: '0.2rem' }}>
-                    {integrante.nombre}
-                  </h5>
-                  <p className="dev-location" style={{ fontSize: '0.6rem', marginBottom: '0.5rem' }}>
-                    <i className="bi bi-geo-alt-fill me-1"></i>
-                    {integrante.ubicacion}
-                  </p>
-                  {/* Social links */}
-                <div className="social-links" style={{ marginTop: '0rem' }}>
-                  <a 
-                    href={integrante.linkedin || "#"} 
-                    className="social-btn social-linkedin"
-                    title="LinkedIn"
-                    onClick={(e) => handleSocialClick(e, integrante.linkedin)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <i className="bi bi-linkedin"></i>
-                  </a>
-                  <a 
-                    href={integrante.github || "#"} 
-                    className="social-btn social-github"
-                    title="GitHub"
-                    onClick={(e) => handleSocialClick(e, integrante.github)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <i className="bi bi-github"></i>
-                  </a>
-                  <a 
-                    href={integrante.instagram || "#"} 
-                    className="social-btn social-instagram"
-                    title="Instagram"
-                    onClick={(e) => handleSocialClick(e, integrante.instagram)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <i className="bi bi-instagram"></i>
-                  </a>
+                >
+                  <img
+                    src={integrante.img}
+                    alt={integrante.nombre}
+                    style={{ 
+                      borderRadius: '50%',
+                      width: '90px',
+                      height: '90px',
+                      objectFit: 'cover',
+                      border: '3px solid rgba(255, 255, 255, 0.2)'
+                    }}
+                  />
                 </div>
+                
+                {/* Contenido (flex) */}
+                <div style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  gap: '0.6rem',
+                  flex: 1,
+                  width: '100%' // Asegura que ocupe todo el ancho
+                }}>
+                  {/* Nombre y ubicación */}
+                  <div style={{ textAlign: 'center' }}>
+                    <h5 className="dev-name" style={{ 
+                      fontSize: '0.9rem', 
+                      marginBottom: '0.3rem',
+                      fontWeight: '600',
+                      color: '#FFFFFF'
+                    }}>
+                      {integrante.nombre}
+                    </h5>
+                    <p className="dev-location" style={{ 
+                      fontSize: '0.65rem', 
+                      marginBottom: '0',
+                      color: 'rgba(255, 255, 255, 0.7)'
+                    }}>
+                      <i className="bi bi-geo-alt-fill me-1"></i>
+                      {integrante.ubicacion}
+                    </p>
+                  </div>
+                  
+                  {/* Social links (con lógica condicional) */}
+                  <div className="social-links" style={{ 
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: '0.5rem',
+                    margin: '0.5rem 0'
+                  }}>
+                    
+                    {/* El botón de LinkedIn solo aparece si 'integrante.linkedin' existe */}
+                    {integrante.linkedin && (
+                      <a
+                        href={integrante.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={handleSocialClick}
+                        className="social-btn social-linkedin"
+                        title="LinkedIn"
+                        style={{
+                          width: '32px',
+                          height: '32px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: '50%',
+                          background: 'rgba(255, 255, 255, 0.15)',
+                          color: '#FFFFFF',
+                          border: 'none',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease',
+                          textDecoration: 'none'
+                        }}
+                      >
+                        <i className="bi bi-linkedin" style={{ fontSize: '1rem' }}></i>
+                      </a>
+                    )}
+                    
+                    {/* El botón de GitHub solo aparece si 'integrante.github' existe */}
+                    {integrante.github && (
+                      <a
+                        href={integrante.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={handleSocialClick}
+                        className="social-btn social-github"
+                        title="GitHub"
+                        style={{
+                          width: '32px',
+                          height: '32px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: '50%',
+                          background: 'rgba(255, 255, 255, 0.15)',
+                          color: '#FFFFFF',
+                          border: 'none',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease',
+                          textDecoration: 'none'
+                        }}
+                      >
+                        <i className="bi bi-github" style={{ fontSize: '1rem' }}></i>
+                      </a>
+                    )}
+
+                    {/* El botón de Instagram solo aparece si 'integrante.instagram' existe */}
+                    {integrante.instagram && (
+                      <a
+                        href={integrante.instagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={handleSocialClick}
+                        className="social-btn social-instagram"
+                        title="Instagram"
+                        style={{
+                          width: '32px',
+                          height: '32px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: '50%',
+                          background: 'rgba(255, 255, 255, 0.15)',
+                          color: '#FFFFFF',
+                          border: 'none',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease',
+                          textDecoration: 'none'
+                        }}
+                      >
+                        <i className="bi bi-instagram" style={{ fontSize: '1rem' }}></i>
+                      </a>
+                    )}
+                  </div>
+                  
+                  {/* Descripción */}
                   <p 
                     className="card-text" 
                     style={{ 
-                      marginBottom: '0.5rem', 
-                      fontSize: '0.65rem',
+                      marginBottom: '0', 
+                      fontSize: '0.7rem',
                       display: '-webkit-box',
                       WebkitLineClamp: '3',
                       WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden'
+                      overflow: 'hidden',
+                      lineHeight: '1.4',
+                      color: 'rgba(255, 255, 255, 0.85)',
+                      textAlign: 'center'
                     }}
                   >
                     {integrante.descripcion}
                   </p>
-                </div>
 
-                {/* Skills */}
-                <div className="skills-container">
-                  {integrante.skills.slice(0, 3).map((skill, j) => (
-                    <AnimatedSkillBar 
-                      key={j}
-                      skill={skill}
-                      index={j}
-                      isCardHovered={hoveredCard === index}
-                    />
-                  ))}
-                </div>
+                  {/* Contenedor de Skills + Texto (para empujar al fondo) */}
+                  <div style={{ marginTop: 'auto' }}>
+                    {/* Skills */}
+                    <div className="skills-container">
+                      {integrante.skills.slice(0, 3).map((skill, j) => (
+                        <AnimatedSkillBar 
+                          key={j}
+                          skill={skill}
+                          index={j}
+                          isCardHovered={hoveredCard === index}
+                        />
+                      ))}
+                    </div>
 
-                
+                    {/* Texto informativo */}
+                    <p style={{
+                      fontSize: '0.6rem',
+                      textAlign: 'center',
+                      color: 'rgba(255, 255, 255, 0.5)',
+                      margin: '0.3rem 0 0 0',
+                      fontStyle: 'italic'
+                    }}>
+                      Hace hover para revelar
+                    </p>
+                  </div>
+                  
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        
+        {/* Controles */}
+        <div className="team-carousel-3d-controls">
+          <button className="team-carousel-3d-btn prev" onClick={() => rotate(-1)}>
+            <i className="bi bi-chevron-left"></i>
+          </button>
+          <button className="team-carousel-3d-btn next" onClick={() => rotate(1)}>
+            <i className="bi bi-chevron-right"></i>
+          </button>
+        </div>
+        
+        {/* Indicadores */}
+        <div className="team-carousel-3d-indicators">
+          {integrantes.map((_, index) => (
+            <button
+              key={index}
+              className={`team-indicator ${index === currentSlide ? 'active' : ''}`}
+              onClick={() => goToSlide(index)}
+            ></button>
+          ))}
+        </div>
       </div>
-      
-      {/* Controles */}
-      <div className="team-carousel-3d-controls">
-        <button className="team-carousel-3d-btn prev" onClick={() => rotate(-1)}>
-          <i className="bi bi-chevron-left"></i>
-        </button>
-        <button className="team-carousel-3d-btn next" onClick={() => rotate(1)}>
-          <i className="bi bi-chevron-right"></i>
-        </button>
-      </div>
-      
-      {/* Indicadores */}
-      <div className="team-carousel-3d-indicators">
-        {integrantes.map((_, index) => (
-          <button
-            key={index}
-            className={`team-indicator ${index === currentSlide ? 'active' : ''}`}
-            onClick={() => goToSlide(index)}
-          ></button>
-        ))}
-      </div>
-    </div>
     </div>
   );
 };

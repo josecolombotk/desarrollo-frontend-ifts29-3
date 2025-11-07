@@ -231,7 +231,7 @@ export default function Home() {
               Nuestro Equipo
             </h2>
             <p className="lead text-muted mb-5">
-              Conoce a los integrantes de nuestro equipo con esta vista interactiva 3D
+              Conoce a los integrantes de nuestro equipo
             </p>
             
             <TeamCarousel3D 

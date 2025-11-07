@@ -1,6 +1,3 @@
-/* TeamCarousel3D.css - CORREGIDO */
-
-/* Contenedor principal */
 .team-carousel-3d-container {
   position: relative;
   width: 80%;
@@ -21,16 +18,18 @@
 
 .team-carousel-3d {
   position: relative;
-  width: 240px;
-  height: 380px;
+  width: 260px;
+
+  height: 440px; 
   transform-style: preserve-3d;
   transition: transform 2s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .team-carousel-3d-item {
   position: absolute;
-  width: 240px;
-  height: auto;
+  width: 260px;
+
+  height: 420px;
   left: 0;
   top: 0;
   transform-origin: center center;
@@ -45,9 +44,9 @@
   z-index: 10;
 }
 
-/* Posicionamiento 3D */
+
 .team-carousel-3d-item:nth-child(1) {
-  transform: rotateY(0deg) translateZ(320px) scale(0.9);
+  transform: rotateY(0deg) translateZ(380px);
 }
 
 .team-carousel-3d-item:nth-child(2) {
@@ -67,14 +66,63 @@
 }
 
 
-/* Optimizar espaciado interno */
+
 .team-carousel-3d-item .card-body {
-  padding: 0.8rem !important; /* Reducido de 1rem */
+  padding: 0.8rem !important; 
+  text-align: left !important;
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.8rem;
+  justify-content: space-between;
+  height: 100%;
 }
 
 
+.team-carousel-3d-item .team-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
-/* CORRECCIÓN: Efecto hover SEGURO para imagen */
+
+.team-carousel-3d-item .image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.team-carousel-3d-item .card-text {
+  text-align: left !important;
+  margin: 0 0 0.5rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.team-carousel-3d-item .dev-name,
+.team-carousel-3d-item .dev-location {
+  text-align: center !important;
+  width: 100%;
+}
+
+.team-carousel-3d-item .dev-name { margin: 0 0 0.2rem 0; }
+.team-carousel-3d-item .dev-location {
+  margin: 0 0 0.4rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.team-carousel-3d-item .social-links { justify-content: center; margin-top: 0.25rem; }
+
+
+
+
 .team-carousel-3d-item .hover-scale-image {
   transition: transform 0.3s ease !important;
   transform-origin: center center !important;
@@ -82,22 +130,22 @@
 
 
 .team-carousel-3d-item .team-card:hover .hover-scale-image {
-  transform: scale(1.03) !important; /* Escala conservadora */
+  transform: scale(1.03) !important; 
 }
 
-/* CORRECCIÓN: Efecto hover SEGURO para tarjeta completa */
+
 .team-carousel-3d-item .team-card:hover {
-  transform: translateY(-5px) !important; /* Solo movimiento vertical */
+  transform: translateY(-5px) !important; 
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* Asegurar que el contenido esté por encima */
+
 .team-carousel-3d-item .compact-content {
   position: relative !important;
   z-index: 2 !important;
 }
 
-/* Skills compactos - mantener los estilos del apipage.css */
+
 .team-carousel-3d-item .compact-skills .skill-item {
   margin-bottom: 8px !important;
 }
@@ -114,7 +162,7 @@
   height: 6px !important;
 }
 
-/* Social links compactos */
+
 .team-carousel-3d-item .compact-social .social-btn {
   width: 28px !important;
   height: 28px !important;
@@ -124,7 +172,7 @@
   font-size: 0.8rem !important;
 } */
 
-/* Controles */
+
 .team-carousel-3d-controls {
   position: absolute;
   top: 50%;
@@ -161,10 +209,9 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Indicadores */
 .team-carousel-3d-indicators {
   position: absolute;
-  bottom: -60px;
+  bottom: -80px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -192,7 +239,7 @@
   transform: scale(1.1);
 }
 
-/* RESPONSIVE MEJORADO */
+
 @media (max-width: 1024px) {
   .team-carousel-3d-container {
     width: 95%;
@@ -202,12 +249,14 @@
   
   .team-carousel-3d {
     width: 260px;
-    height: 380px;
+
+    height: 440px;
   }
   
   .team-carousel-3d-item {
     width: 260px;
-    height: 380px;
+  
+    height: 420px;
   }
   
   /* Ajustar para tablet */
@@ -237,27 +286,27 @@
   .team-carousel-3d-item {
     width: 240px;
     height: auto;
-    opacity: 0; /* Ocultar todas en móvil */
+    opacity: 0; 
     filter: blur(0);
   }
   
-  /* EN MÓVIL: Solo mostrar la tarjeta activa */
+
   .team-carousel-3d-item.active {
     opacity: 1;
-    transform: none !important; /* Reset transforms en móvil */
+    transform: none !important; 
     position: relative;
   }
   
   .team-carousel-3d-item:not(.active) {
-    display: none; /* Ocultar completamente las no activas */
+    display: none; 
   }
   
-  /* Ajustar imagen para móvil */
+  
   .team-carousel-3d-item .compact-img {
     height: 100px !important;
   }
   
-  /* Ajustar controles para móvil */
+  
   .team-carousel-3d-controls {
     padding: 0 15px;
   }
@@ -292,7 +341,7 @@
     height: 90px !important;
   }
   
-  /* Indicadores más pequeños en móvil */
+
   .team-carousel-3d-indicators {
     bottom: -50px;
   }
@@ -301,4 +350,38 @@
     width: 8px;
     height: 8px;
   }
+}
+
+
+.team-carousel-3d-item .skill-name,
+.team-carousel-3d-item .skill-percentage {
+  color: white;
+}
+
+.team-carousel-3d-item .social-btn i {
+  color: white;
+  line-height: 1; 
+}
+
+.team-carousel-3d-item .social-btn {
+  border: 1px solid white; 
+  width: 30px;  
+  height: 30px; 
+}
+
+
+.team-carousel-3d-item .team-card:hover .skill-name {
+  color: white;
+}
+.team-carousel-3d-item .team-card:hover .skill-percentage {
+  color: white;
+}
+
+
+.team-carousel-3d-item .social-btn:hover i {
+  color: white !important;
+}
+
+.team-carousel-3d-item .social-btn:hover {
+  border-color: white; 
 }

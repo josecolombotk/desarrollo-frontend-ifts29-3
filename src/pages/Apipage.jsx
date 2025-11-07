@@ -352,10 +352,10 @@ export default function ApiPage() {
                     {selectedWeather.city}{selectedWeather.province ? `, ${selectedWeather.province}` : ""}
                   </p>
                 </div>
-                <div className="right">
-                  <div className="weather-icon">
-                    {getWeatherIcon(selectedWeather.code)}
-                  </div>
+                {/* Esta es la estructura de 'Copia de Apipage.jsx', 
+                    que coincide con los estilos de 'Copia de apipage.css' */}
+                <div className="weather-icon">
+                  {getWeatherIcon(selectedWeather.code)}
                 </div>
               </div>
 
