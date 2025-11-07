@@ -11,11 +11,14 @@ import joseImg from "../assets/jose.png";
 import estivenImg from "../assets/est-avatar.png";
 import favicon from "../assets/favicon.png";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
-import Carousel3DHome from "../components/Carousel3DHome";
+import AnimatedSkillBar from '../components/AnimatedSkillBar/AnimatedSkillBar';
+import TeamCarousel3D from '../components/TeamCarousel3D/TeamCarousel3D';
+
 
 export default function Home() {
   usePageMetadata("Equipo Innovador - Inicio", favicon);
   const [clima, setClima] = useState(null);
+  const [hoveredCard, setHoveredCard] = useState(null);
 
   useEffect(() => {
     async function fetchClima() {
@@ -67,17 +70,31 @@ export default function Home() {
       nombre: "Lucas",
       img: lucasImg,
       ubicacion: "Villa Devoto, CABA",
-      descripcion:
-        "Amante de la tecnología, desarrollo de software, videojuegos y fútbol.",
-      skills: ["HTML", "CSS", "JavaScript", "C#"],
+      descripcion: "Me encanta la tecnología, el desarrollo de software, los juegos, pasar tiempo en familia y el fútbol.",
+      skills: [
+        { name: "HTML", level: 85 },
+        { name: "CSS", level: 80 },
+        { name: "JavaScript", level: 75 },
+        { name: "C#", level: 70 }
+      ],
+      linkedin: "#",
+      github: "#",
+      instagram: "#"
     },
     {
       nombre: "Victoria",
       img: victoriaImg,
       ubicacion: "Buenos Aires, Argentina",
-      descripcion:
-        "Diseñadora multimedia especializada en UX/UI. Me apasiona transformar ideas en experiencias.",
-      skills: ["Figma", "Adobe Suite", "HTML", "JavaScript"],
+      descripcion: "Diseñadora multimedia especializada en UX/UI. Me apasiona transformar ideas en productos digitales.",
+      skills: [
+        { name: "Figma", level: 90 },
+        { name: "Adobe Suite", level: 85 },
+        { name: "HTML", level: 75 },
+        { name: "JavaScript", level: 65 }
+      ],
+      linkedin: "#",
+      github: "#",
+      instagram: "#"
     },
     {
       nombre: "Sebastián",
@@ -85,7 +102,15 @@ export default function Home() {
       ubicacion: "Mendoza, Argentina",
       descripcion:
         "Administrador de redes especializado en infraestructura TI y seguridad de redes.",
-      skills: ["Mikrotik", "Python", "PHP", "Firewall"],
+      skills: [
+      { name: "Mikrotik", level: 88 },
+      { name: "Python", level: 75 },
+      { name: "PHP", level: 70 },
+      { name: "Firewall", level: 82 }
+      ],
+      linkedin: "#",
+      github: "#",
+      instagram: "#"
     },
     {
       nombre: "Jose",
@@ -93,7 +118,17 @@ export default function Home() {
       ubicacion: "Argentina",
       descripcion:
         "Estudiante de desarrollo de software, web y de creación de videojuegos.",
-      skills: ["HTML", "Python", "Flask", "Godot", "Maya", "Blender"],
+      skills: [
+      { name: "HTML", level: 80 },
+      { name: "Python", level: 75 },
+      { name: "Flask", level: 70 },
+      { name: "Godot", level: 65 },
+      { name: "Maya", level: 60 },
+      { name: "Blender", level: 70 }
+      ],
+      linkedin: "#",
+      github: "#",
+      instagram: "#"
     },
     {
       nombre: "Estiven",
@@ -101,7 +136,15 @@ export default function Home() {
       ubicacion: "Buenos Aires, Argentina",
       descripcion:
         "Desarrollador de software especializado en e-commerce y aplicaciones web.",
-      skills: ["NodeJS", "MySQL", "Express", "NestJS"],
+      skills: [
+      { name: "NodeJS", level: 85 },
+      { name: "MySQL", level: 80 },
+      { name: "Express", level: 78 },
+      { name: "NestJS", level: 72 }
+      ],
+      linkedin: "#",
+      github: "#",
+      instagram: "#"
     },
   ];
 
@@ -180,11 +223,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Ccarrusel 3D */}
-      <section id="equipo" className="carousel-3d-section py-5">
-        <h2 className="text-center mb-4">Nuestro Equipo</h2>
-        <Carousel3DHome integrantes={integrantes} />
-      </section>
+      {/* Sección del Equipo */}
+      
+        <section id="equipo" className="py-5">
+          <div className="container text-center">
+            <h2 className="display-5 fw-bold text-primary mb-3">
+              Nuestro Equipo
+            </h2>
+            <p className="lead text-muted mb-5">
+              Conoce a los integrantes de nuestro equipo con esta vista interactiva 3D
+            </p>
+            
+            <TeamCarousel3D 
+              integrantes={integrantes}
+              autoRotate={true}
+              interval={4000}
+              showFullCards={true}
+            />
+          </div>
+        </section>
+
     </div>
   );
 }
