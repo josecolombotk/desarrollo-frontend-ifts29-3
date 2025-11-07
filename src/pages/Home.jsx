@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/styles.css";
+import "../css/carrousel.css";
 import { usePageMetadata } from "../hooks/usePageMetadata";
 import heroVideo from "../assets/hero-bg.mp4";
 import lucasImg from "../assets/lucas_perfil.png";
@@ -19,42 +20,7 @@ export default function Home() {
   const [clima, setClima] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
 
-  // Implementación del Toast de bienvenida
-  const [showToast, setShowToast] = useState(false);
-  const [toastData, setToastData] = useState({ saludo: "", hora: "" });
-
-  const handleBienvenidaClick = () => {
-    if (showToast) return;
-
-    const ahora = new Date();
-    const hora = ahora.getHours();
-    let saludo;
-
-    if (hora < 12) {
-      saludo = "¡Buenos días!";
-    } else if (hora < 18) {
-      saludo = "¡Buenas tardes!";
-    } else {
-      saludo = "¡Buenas noches!";
-    }
-
-    const horaFormateada = ahora.toLocaleTimeString("es-ES", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
-    setToastData({ saludo, hora: horaFormateada });
-    setShowToast(true);
-
-    // Programa que el toast se oculte solo después de 5 segundos
-    setTimeout(() => {
-      setShowToast(false);
-    }, 3000);
-  };
-
-  // Llamada a API de clima
   useEffect(() => {
-    // definimos la función y la ejecutamos
     async function fetchClima() {
       try {
         const res = await fetch(
@@ -73,9 +39,31 @@ export default function Home() {
         setClima("Error al conectar con la API del clima.");
       }
     }
-
     fetchClima();
   }, []);
+
+  const [showToast, setShowToast] = useState(false);
+  const [toastData, setToastData] = useState({ saludo: "", hora: "" });
+
+  const handleBienvenidaClick = () => {
+    if (showToast) return;
+    const ahora = new Date();
+    const hora = ahora.getHours();
+    let saludo;
+
+    if (hora < 12) saludo = "¡Buenos días!";
+    else if (hora < 18) saludo = "¡Buenas tardes!";
+    else saludo = "¡Buenas noches!";
+
+    const horaFormateada = ahora.toLocaleTimeString("es-ES", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    setToastData({ saludo, hora: horaFormateada });
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+  };
 
   const integrantes = [
     {
@@ -127,7 +115,7 @@ export default function Home() {
     {
       nombre: "Jose",
       img: joseImg,
-      ubicacion: "???",
+      ubicacion: "Argentina",
       descripcion:
         "Estudiante de desarrollo de software, web y de creación de videojuegos.",
       skills: [
@@ -160,12 +148,15 @@ export default function Home() {
     },
   ];
 
-  // Reutilizar animación para las tarjetas del equipo
-  useRevealOnScroll('#equipo .card', { threshold: 0.2, rootMargin: '0px 0px -10% 0px', stagger: 100 });
+  useRevealOnScroll(".carousel-3d", {
+    threshold: 0.2,
+    rootMargin: "0px 0px -10% 0px",
+    stagger: 100,
+  });
 
   return (
     <div className="home trama">
-      {/* Hero Section */}
+      {/* hero */}
       <section
         className="hero"
         style={{
@@ -178,7 +169,7 @@ export default function Home() {
           Tu navegador no soporta video en HTML5.
         </video>
 
-        {/* Toast de bienvenida */}
+        {/* toast de bienvenida */}
         <div
           className="toast-container position-fixed top-0 end-0 p-3"
           style={{ zIndex: 9999 }}
@@ -197,7 +188,6 @@ export default function Home() {
                 type="button"
                 className="btn-close btn-close-white"
                 onClick={() => setShowToast(false)}
-                aria-label="Close"
               ></button>
             </div>
             <div className="toast-body text-dark">
@@ -207,15 +197,15 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Contenido del Hero */}
+        {/* contenido principal */}
         <div className="container hero-content">
           <div className="row align-items-center min-vh-100 pt-5">
-            <div className="col-lg-6">
+            <div className="col-lg-6" style={{ marginLeft: "40px" }}>
               <h1 className="display-4 fw-bold mb-4">Equipo Innovador</h1>
               <p className="lead mb-4">
                 Somos un grupo de estudiantes apasionados por la tecnología y el
-                desarrollo web. Nuestro objetivo es crear soluciones innovadoras
-                y aprender juntos en este emocionante viaje.
+                desarrollo web. Creamos soluciones innovadoras y aprendemos
+                juntos en este emocionante viaje.
               </p>
               <div className="d-flex flex-wrap gap-3">
                 <button

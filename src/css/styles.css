@@ -288,6 +288,7 @@ footer {
 .skills-list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: left !important;
   gap: 0.5rem;
   margin-top: 1rem;
 }
